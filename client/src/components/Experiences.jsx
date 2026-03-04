@@ -26,7 +26,7 @@ function Experiences() {
       {experienceData.length > 0 ? (
         <div className="flex py-10 gap-20 sm:flex-col">
           {/* Left Section - Experience Periods */}
-          <div className="flex flex-col gap-5 border-l-2 border-slate-600 w-1/3 sm:flex-row sm:overflow-x-scroll sm:w-full sm:border-none">
+          <div className="flex flex-col gap-5 border-l-2 border-slate-600 w-1/2 sm:flex-row sm:overflow-x-scroll sm:w-full sm:border-none">
             {experienceData.map((experience, index) => (
               <div
                 key={index}
