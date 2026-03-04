@@ -8,6 +8,12 @@ export const addExperience = async (req, res) => {
     const userId = req.userId;
 
     const { title, period, company, description } = req.body;
+    if (!title || !period || !company || !description) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
 
     const user = await User.findById(userId);
 
