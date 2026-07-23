@@ -8,18 +8,17 @@ function Project() {
   const [projectData, setProjectData] = useState([]);
   const [showAll, setShowAll] = useState(false);
 
-  const fetchProjects = async () => {
-    try {
-      const res = await axios.get(`${API_URL}/project/get`);
-      setProjectData(res?.data?.data || []);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/project/get`);
+        setProjectData(res?.data?.data || []);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     fetchProjects();
-  }, []);
+  }, [API_URL]);
 
   const visibleProjects = showAll ? projectData : projectData.slice(0, 4);
 
@@ -50,11 +49,11 @@ function Project() {
                       className="w-full h-60 object-cover rounded-lg"
                     />
                     <div className="absolute inset-0 bg-primary bg-opacity-90 flex flex-col gap-5 justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out p-4 text-center">
-                      <h3 className="text-white text-xl font-bold mb-2">
+                      <h3 className="text-white text-base font-bold mb-2">
                         {project.title}
                       </h3>
 
-                      <div className="flex gap-6 text-white text-4xl">
+                      <div className="flex gap-6 text-white text-3xl">
                         {project.githubURL && (
                           <a
                             href={project.githubURL}

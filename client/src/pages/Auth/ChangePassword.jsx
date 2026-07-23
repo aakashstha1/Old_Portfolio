@@ -43,7 +43,7 @@ function ChangePassword({ open, onClose }) {
   };
 
   const handleClose = () => {
-    setInputs("");
+    setInputs({ oldPassword: "", newPassword: "" });
 
     onClose();
   };

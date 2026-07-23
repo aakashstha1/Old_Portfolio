@@ -1,5 +1,4 @@
 import { Button } from "antd";
-import React from "react";
 import { motion } from "framer-motion";
 function Navbar() {
   return (
@@ -15,6 +14,7 @@ function Navbar() {
           >
             <a href="#about">About</a>
           </motion.li>
+
           <motion.li
             initial={{ x: 80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -23,6 +23,7 @@ function Navbar() {
           >
             <a href="#experience">Experience</a>
           </motion.li>
+
           <motion.li
             initial={{ x: 80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -31,25 +32,27 @@ function Navbar() {
           >
             <a href="#project">Projects</a>
           </motion.li>
-          <motion.li
+
+          {/* <motion.li
             initial={{ x: 80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.6 }}
             className="hover:text-secondary"
           >
             <a href="#achievement">Achievements</a>
-          </motion.li>
-          <motion.li
+          </motion.li> */}
+
+          {/* <motion.li
             initial={{ x: 80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.8 }}
             className="hover:text-secondary"
-          ></motion.li>
+          ></motion.li> */}
 
           <motion.a
             initial={{ x: 80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 1.0 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.6 }}
             href="#contact"
           >
             <Button className="font-semibold">

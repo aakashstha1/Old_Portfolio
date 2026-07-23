@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Tabs, Dropdown } from "antd";
 import AdminIntro from "./AdminIntro";
-import { useAuth } from "../../context/AuthContext";
 import AdminAbout from "./AdminAbout";
 import AdminExperiences from "./AdminExperiences";
 import AdminProjects from "./AdminProjects";
@@ -11,6 +10,7 @@ import { SettingOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import ChangePassword from "../Auth/ChangePassword";
 import AdminAchivement from "./AdminAchivement";
+import { useAuth } from "../../hooks/useAuth";
 
 function Dashboard() {
   const [activeTabKey, setActiveTabKey] = useState("1");

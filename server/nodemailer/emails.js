@@ -5,6 +5,15 @@ import {
 } from "./emailTemplates.js";
 import { transporter, sender } from "./nodemailer.config.js";
 
+const escapeHtml = (str = "") => {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+};
+
 export const sendPasswordResetEmail = async (email, resetURL) => {
   try {
     await transporter.sendMail({
@@ -39,13 +48,13 @@ export const submitMessage = async (name, email, phone, message) => {
   try {
     await transporter.sendMail({
       from: sender,
-      to: "aakash.078@godawari.edu.np",
+      to: process.env.MY_EMAIL,
       replyTo: email,
       subject: `New contact form message from ${name}`,
-      html: CONTACT_FORM_SUBMISSION_TEMPLATE.replace("{name}", name)
-        .replace("{email}", email)
-        .replace("{phone}", phone || "N/A")
-        .replace("{message}", message),
+      html: CONTACT_FORM_SUBMISSION_TEMPLATE.replace("{name}", escapeHtml(name))
+        .replace("{email}", escapeHtml(email))
+        .replace("{phone}", escapeHtml(phone || "N/A"))
+        .replace("{message}", escapeHtml(message)),
     });
     console.log("Contact message email sent successfully");
   } catch (error) {

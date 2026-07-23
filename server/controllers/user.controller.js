@@ -56,51 +56,51 @@ export const logout = async (req, res) => {
 
 // --------------------------------------------Register--------------------------------------------------
 
-export const register = async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
+// export const register = async (req, res) => {
+//   try {
+//     const { username, email, password } = req.body;
 
-    // Check if all required fields are provided
-    if (!username || !email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required!",
-      });
-    }
+//     // Check if all required fields are provided
+//     if (!username || !email || !password) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "All fields are required!",
+//       });
+//     }
 
-    // Check for existing user
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
-    if (existingUser) {
-      return res.status(409).json({
-        success: false,
-        message: "User already exists with this email or username!",
-      });
-    }
+//     // Check for existing user
+//     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+//     if (existingUser) {
+//       return res.status(409).json({
+//         success: false,
+//         message: "User already exists with this email or username!",
+//       });
+//     }
 
-    // Hash password
-    const hashedPassword = await bcryptjs.hash(password, 10);
+//     // Hash password
+//     const hashedPassword = await bcryptjs.hash(password, 10);
 
-    // Create user
-    const newUser = new User({
-      username,
-      email,
-      password: hashedPassword,
-    });
+//     // Create user
+//     const newUser = new User({
+//       username,
+//       email,
+//       password: hashedPassword,
+//     });
 
-    await newUser.save();
+//     await newUser.save();
 
-    const { password: pwd, ...rest } = newUser._doc;
+//     const { password: pwd, ...rest } = newUser._doc;
 
-    res.status(201).json({
-      success: true,
-      message: "User registered successfully!",
-      user: rest,
-    });
-  } catch (error) {
-    console.error("Register Error:", error);
-    res.status(500).json({ success: false, message: "Failed to register!" });
-  }
-};
+//     res.status(201).json({
+//       success: true,
+//       message: "User registered successfully!",
+//       user: rest,
+//     });
+//   } catch (error) {
+//     console.error("Register Error:", error);
+//     res.status(500).json({ success: false, message: "Failed to register!" });
+//   }
+// };
 
 // --------------------------------------------Update Password--------------------------------------------------
 
@@ -164,7 +164,7 @@ export const forgotPassword = async (req, res) => {
     // send email
     await sendPasswordResetEmail(
       user.email,
-      `http://localhost:5173/admin/reset-password/${resetToken}`
+      `${process.env.CLIENT_URL || "http://localhost:5173"}/admin/reset-password/${resetToken}`,
     );
 
     res.status(200).json({

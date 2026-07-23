@@ -8,8 +8,7 @@ import SocialMedia from "../../components/SocialMedia";
 import Experiences from "../../components/Experiences";
 import { useEffect, useState } from "react";
 import ScreenLoader from "../../components/ScreenLoader";
-import VisitCounter from "../../components/VisitCounter.jsx";
-import Achievement from "../../components/Achivement.jsx";
+// import Achievement from "../../components/Achivement.jsx";
 function Home() {
   const [loading, setLoading] = useState(false);
 
@@ -24,8 +23,6 @@ function Home() {
   }, []);
   return (
     <div>
-      <VisitCounter />
-
       {loading ? (
         <ScreenLoader />
       ) : (
@@ -36,7 +33,7 @@ function Home() {
             <About />
             <Experiences />
             <Project />
-            <Achievement />
+            {/* <Achievement /> */}
             <Contact />
             <Footer />
             <SocialMedia />

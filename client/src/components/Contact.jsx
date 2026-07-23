@@ -105,7 +105,7 @@ function Contact() {
                 loading={loading}
                 onClick={handleSubmit}
               >
-                Send
+                {loading ? "Sending..." : "Send Message"}
               </Button>
             </div>
           </div>

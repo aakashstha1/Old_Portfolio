@@ -34,11 +34,13 @@ export const updateAbout = async (req, res) => {
     const { description1, description2, skills } = req.body;
     let about = await About.findOne({ user: userId });
 
+    let resume = about?.resume;
+    let publicId = about?.cloudinaryId;
+
     if (req.file) {
       const file = req.file;
-      const resume = file?.path || file?.secure_url;
-      const publicId = file?.filename || file?.public_id;
-
+      resume = file?.path || file?.secure_url;
+      publicId = file?.filename || file?.public_id;
       if (!resume || !publicId) {
         console.error("Cloudinary upload failed:", file);
         return res.status(500).json({

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { Input, Button, message } from "antd";
 import {
@@ -9,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import { useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "../../hooks/useAuth";
 
 function ResetPassword() {
   const navigate = useNavigate();

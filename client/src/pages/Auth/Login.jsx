@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Input, Button } from "antd";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 function Login() {
   const navigate = useNavigate();

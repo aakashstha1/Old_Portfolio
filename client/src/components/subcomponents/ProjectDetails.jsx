@@ -1,4 +1,3 @@
-import React from "react";
 import { Image } from "antd";
 import SectionTitle from "../SectionTitle";
 import PropTypes from "prop-types";

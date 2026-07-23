@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Input, Button, message } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "../../hooks/useAuth";
 
 function ForgotPassword() {
   const API_URL = import.meta.env.VITE_API_URL;

@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
 import SectionTitle from "./SectionTitle";
 import axios from "axios";
+import { useCallback } from "react";
 
 function Experiences() {
   const [selectedPeriod, setSelectedPeriod] = useState(0);
   const API_URL = import.meta.env.VITE_API_URL;
   const [experienceData, setExperienceData] = useState([]);
 
-  const fetchExperiences = async () => {
+  const fetchExperiences = useCallback(async () => {
     try {
       const res = await axios.get(`${API_URL}/exp/get`);
       setExperienceData(res?.data?.data || []);
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [API_URL]);
 
   useEffect(() => {
     fetchExperiences();
-  }, []);
+  }, [fetchExperiences]);
 
   return (
     <div id="experience">

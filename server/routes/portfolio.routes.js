@@ -3,7 +3,7 @@ import {
   forgotPassword,
   login,
   logout,
-  register,
+  // register,
   resetPassword,
   updatePassword,
 } from "../controllers/user.controller.js";
@@ -16,16 +16,13 @@ import {
   // updateContact,
 } from "../controllers/contact.controller.js";
 import { getLinks, updateLinks } from "../controllers/link.controller.js";
-import {
-  getVisitCount,
-  incrementVisitCount,
-} from "../controllers/visit.controller.js";
+
 import { upload } from "../middleware/multerAsCloudinary.js";
 
 const router = express.Router();
 
 //Admin routes
-router.route("/admin/register").post(register);
+// router.route("/admin/register").post(register);
 router.route("/admin/login").post(login);
 router.route("/admin/logout").post(logout);
 router.route("/admin/update").put(authentication, updatePassword);
@@ -54,7 +51,5 @@ router.route("/get-links").get(getLinks);
 router.route("/update-links").put(authentication, updateLinks);
 
 //Visit Counter
-router.route("/visit").post(incrementVisitCount);
-router.route("/count").get(getVisitCount);
 
 export default router;

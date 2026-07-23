@@ -8,9 +8,9 @@ export const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: process.env.USER,
+    user: process.env.EMAIL_USER,
     pass: process.env.PASS,
   },
 });
 
-export const sender = `"Skyborn" <${process.env.USER}>`;
+export const sender = `"Skyborn" <${process.env.EMAIL_USER}>`;
