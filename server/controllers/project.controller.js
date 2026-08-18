@@ -2,6 +2,7 @@ import Project from "../models/project.model.js";
 import User from "../models/user.model.js";
 
 import { deleteCloudinaryFile } from "../utils/cloudinaryDeletion.js";
+import { generateSnapshot } from "../utils/snapshot.js";
 
 // --------------------------------------------Get projects--------------------------------------------------
 
@@ -105,6 +106,7 @@ export const addProject = async (req, res) => {
     });
 
     const savedProject = await newProject.save();
+    generateSnapshot();
 
     res.status(201).json({
       success: true,
@@ -154,6 +156,7 @@ export const updateProject = async (req, res) => {
     project.websiteURL = websiteURL || project.websiteURL;
 
     const updatedProject = await project.save();
+    generateSnapshot();
 
     res.status(200).json({
       success: true,
@@ -186,6 +189,7 @@ export const deleteProject = async (req, res) => {
     await deleteCloudinaryFile(project.cloudinaryId, resourceType);
 
     await Project.findByIdAndDelete(projectId);
+    generateSnapshot();
 
     res.status(200).json({
       success: true,

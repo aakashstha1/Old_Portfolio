@@ -1,4 +1,5 @@
 import Link from "../models/link.model.js";
+import { generateSnapshot } from "../utils/snapshot.js";
 
 // --------------------------------------------Get Links--------------------------------------------------
 
@@ -47,6 +48,7 @@ export const updateLinks = async (req, res) => {
       });
 
       const savedLink = await newLink.save();
+      generateSnapshot();
 
       return res.status(201).json({
         success: true,
@@ -62,6 +64,7 @@ export const updateLinks = async (req, res) => {
     link.githubURL = githubURL || link.githubURL;
 
     const savedLink = await link.save();
+    generateSnapshot();
 
     res.status(200).json({
       success: true,

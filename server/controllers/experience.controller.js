@@ -1,5 +1,6 @@
 import Experience from "../models/experience.model.js";
 import User from "../models/user.model.js";
+import { generateSnapshot } from "../utils/snapshot.js";
 
 // --------------------------------------------Add Experience--------------------------------------------------
 
@@ -33,6 +34,7 @@ export const addExperience = async (req, res) => {
     });
 
     const savedExperience = await newExperience.save();
+    generateSnapshot();
 
     res.status(201).json({
       success: true,
@@ -100,6 +102,7 @@ export const updateExperience = async (req, res) => {
     experience.description = description || experience.description;
 
     const updatedExperience = await experience.save();
+    generateSnapshot();
 
     res.status(200).json({
       success: true,
@@ -133,6 +136,8 @@ export const deleteExperience = async (req, res) => {
         message: "Experience not found",
       });
     }
+
+    generateSnapshot();
 
     res.status(200).json({
       success: true,

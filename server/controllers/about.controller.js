@@ -1,4 +1,5 @@
 import About from "../models/about.model.js";
+import { generateSnapshot } from "../utils/snapshot.js";
 
 // --------------------------------------------Get About--------------------------------------------------
 
@@ -62,6 +63,7 @@ export const updateAbout = async (req, res) => {
       });
 
       const savedAbout = await newAbout.save();
+      generateSnapshot();
 
       return res.status(201).json({
         success: true,
@@ -85,6 +87,7 @@ export const updateAbout = async (req, res) => {
       about.cloudinaryId = req.file.filename || req.file.public_id;
     }
     const savedAbout = await about.save();
+    generateSnapshot();
 
     res.status(200).json({
       success: true,

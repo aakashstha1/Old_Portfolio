@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SectionTitle from "./SectionTitle";
 import axios from "axios";
 import { useCallback } from "react";
+import { fetchSnapshot } from "../lib/snapshot";
 
 function Experiences() {
   const [selectedPeriod, setSelectedPeriod] = useState(0);
@@ -9,6 +10,9 @@ function Experiences() {
   const [experienceData, setExperienceData] = useState([]);
 
   const fetchExperiences = useCallback(async () => {
+    const snapshot = await fetchSnapshot();
+    if (snapshot?.experiences) setExperienceData(snapshot.experiences);
+
     try {
       const res = await axios.get(`${API_URL}/exp/get`);
       setExperienceData(res?.data?.data || []);

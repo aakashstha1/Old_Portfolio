@@ -1,4 +1,5 @@
 import Intro from "../models/intro.model.js";
+import { generateSnapshot } from "../utils/snapshot.js";
 
 // --------------------------------------------Get Intro--------------------------------------------------
 export const getIntro = async (req, res) => {
@@ -70,6 +71,7 @@ export const updateIntro = async (req, res) => {
       });
 
       const savedIntro = await newIntro.save();
+      generateSnapshot();
 
       return res.status(201).json({
         success: true,
@@ -88,6 +90,7 @@ export const updateIntro = async (req, res) => {
     intro.cloudinaryId = cloudinaryId || intro.cloudinaryId;
 
     const savedIntro = await intro.save();
+    generateSnapshot();
 
     res.status(200).json({
       success: true,

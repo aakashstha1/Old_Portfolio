@@ -6,15 +6,22 @@ import Lottie from "lottie-react";
 import aboutAnimation from "../assets/lottie/about.json";
 import { motion } from "framer-motion";
 import Button from "./Button";
+import { fetchSnapshot } from "../lib/snapshot";
 function About() {
   const [aboutData, setAboutData] = useState({});
   const [resumeURL, setResumeURL] = useState("");
   const API_URL = import.meta.env.VITE_API_URL;
 
   const fetchAbout = async () => {
+    const snapshot = await fetchSnapshot();
+    if (snapshot?.about) {
+      setAboutData(snapshot.about);
+      setResumeURL(snapshot.about?.resume || "");
+    }
+
     try {
       const res = await axios.get(`${API_URL}/get-about`);
-      setAboutData(res?.data?.data);
+      setAboutData(res?.data?.data || {});
       setResumeURL(res?.data?.data?.resume || "");
     } catch (error) {
       console.error("Failed to fetch intro:", error);
