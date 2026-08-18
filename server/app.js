@@ -25,12 +25,14 @@ app.use(
       "https://www.aakashshrestha1.com.np",
     ],
     credentials: true,
-  })
+  }),
 );
 app.use("/uploads", express.static("uploads"));
 
 //Api's
-
+app.get("/", (req, res) => {
+  res.send("API is running");
+});
 app.use("/api", portfolioRoutes);
 app.use("/api/project", projectRoutes);
 app.use("/api/exp", expRoutes);
