@@ -22,7 +22,6 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://aakash-shrestha.onrender.com",
-      "https://www.aakashshrestha1.com.np",
     ],
     credentials: true,
   }),
