@@ -2,6 +2,7 @@ import Achievement from "../models/achievement.model.js";
 import User from "../models/user.model.js";
 
 import { deleteCloudinaryFile } from "../utils/cloudinaryDeletion.js";
+import { generateSnapshot } from "../utils/snapshot.js";
 
 // --------------------------------------------Get achievements--------------------------------------------------
 
@@ -81,6 +82,7 @@ export const addAchievement = async (req, res) => {
     });
 
     const savedAchievement = await newAchievement.save();
+    generateSnapshot();
 
     res.status(201).json({
       success: true,
@@ -113,6 +115,7 @@ export const deleteAchievement = async (req, res) => {
     await deleteCloudinaryFile(achievement.cloudinaryId, resourceType);
 
     await Achievement.findByIdAndDelete(achievementId);
+    generateSnapshot();
 
     res.status(200).json({
       success: true,

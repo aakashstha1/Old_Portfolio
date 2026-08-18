@@ -3,6 +3,7 @@ import SectionTitle from "./SectionTitle";
 import { useEffect, useState } from "react";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { easeOut, motion } from "framer-motion";
+import { fetchSnapshot } from "../lib/snapshot";
 function Project() {
   const API_URL = import.meta.env.VITE_API_URL;
   const [projectData, setProjectData] = useState([]);
@@ -10,6 +11,9 @@ function Project() {
 
   useEffect(() => {
     const fetchProjects = async () => {
+      const snapshot = await fetchSnapshot();
+      if (snapshot?.projects) setProjectData(snapshot.projects);
+
       try {
         const res = await axios.get(`${API_URL}/project/get`);
         setProjectData(res?.data?.data || []);

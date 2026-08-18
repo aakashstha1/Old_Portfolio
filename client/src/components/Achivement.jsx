@@ -4,6 +4,7 @@ import Lottie from "lottie-react";
 import certificateAnimation from "../assets/lottie/Certificate.json";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { fetchSnapshot } from "../lib/snapshot";
 
 function Achievement() {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -11,6 +12,9 @@ function Achievement() {
 
   useEffect(() => {
     const fetchAchievements = async () => {
+      const snapshot = await fetchSnapshot();
+      if (snapshot?.achievements) setAchievements(snapshot.achievements);
+
       try {
         const res = await axios.get(`${API_URL}/achievement/get`);
         if (res.data.success) {

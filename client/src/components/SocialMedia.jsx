@@ -1,15 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { fetchSnapshot } from "../lib/snapshot";
 
 function SocialMedia() {
   const [links, setLinks] = useState({});
   const API_URL = import.meta.env.VITE_API_URL;
 
   const fetchLinks = async () => {
+    const snapshot = await fetchSnapshot();
+    if (snapshot?.links) setLinks(snapshot.links);
+
     try {
       const res = await axios.get(`${API_URL}/get-links`);
-      setLinks(res?.data?.data);
+      setLinks(res?.data?.data || {});
     } catch (error) {
       console.error("Failed to fetch intro:", error);
     }

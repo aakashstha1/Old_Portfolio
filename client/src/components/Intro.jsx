@@ -2,14 +2,20 @@ import axios from "axios";
 import Button from "./Button";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { fetchSnapshot } from "../lib/snapshot";
 function Intro() {
   const [introData, setIntroData] = useState({});
   const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchData = async () => {
+      // 1. Show cached snapshot instantly (works even while backend is cold-starting)
+      const snapshot = await fetchSnapshot();
+      if (snapshot?.intro) setIntroData(snapshot.intro);
+
+      // 2. Refresh with live data in the background
       try {
         const introRes = await axios.get(`${API_URL}/get-intro`);
-        setIntroData(introRes.data.data);
+        setIntroData(introRes.data.data || {});
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
