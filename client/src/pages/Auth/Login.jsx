@@ -41,10 +41,10 @@ function Login() {
   };
 
   return (
-    <div className="box flex justify-center items-center h-screen bg-primary">
+    <div className="box flex justify-center items-center min-h-screen bg-primary px-4 py-10 overflow-y-auto">
       <form
         onSubmit={handleSubmit}
-        className="w-96 flex gap-4 flex-col shadow-lg border border-secondary p-6 bg-primary rounded"
+        className="w-full max-w-96 flex gap-4 flex-col shadow-lg border border-secondary p-6 bg-primary rounded"
       >
         <h1 className="flex justify-center text-xl font-semibold text-tubeLight-effect py-2">
           Admin Login

@@ -28,7 +28,7 @@ function Home() {
       ) : (
         <>
           <Navbar />
-          <div className="bg-primary px-40 sm:px-5">
+          <div className="bg-primary px-40 lg:px-10 md:px-8 sm:px-5">
             <Intro />
             <About />
             <Experiences />
