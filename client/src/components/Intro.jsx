@@ -3,6 +3,7 @@ import Button from "./Button";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { fetchSnapshot } from "../lib/snapshot";
+import { optimizeCloudinaryUrl } from "../lib/cloudinaryImage";
 function Intro() {
   const [introData, setIntroData] = useState({});
   const API_URL = import.meta.env.VITE_API_URL;
@@ -25,8 +26,8 @@ function Intro() {
   }, [API_URL]);
 
   return (
-    <div className="h-[90vh] bg-primary flex justify-center gap-6 sm:flex-col sm:items-center sm:h-full sm:pt-10">
-      <div className="w-2/3 flex flex-col items-start justify-center gap-4 sm:order-1 sm:w-full sm:items-center sm:text-center">
+    <div className="min-h-[90vh] bg-primary flex flex-wrap justify-center items-center gap-6 py-16 sm:h-full sm:py-10">
+      <div className="flex-1 basis-[320px] max-w-2xl flex flex-col items-start justify-center gap-4 sm:items-center sm:text-center sm:basis-full">
         <motion.h1
           initial={{ y: 80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -39,7 +40,7 @@ function Intro() {
           initial={{ y: 80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-          className="text-secondary text-7xl sm:text-3xl font-semibold"
+          className="text-secondary text-[clamp(2rem,5vw,4.5rem)] font-semibold"
         >
           {introData.firstName} {introData.lastName}
         </motion.h1>
@@ -47,7 +48,7 @@ function Intro() {
           initial={{ y: 80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
-          className="text-white text-5xl sm:text-3xl font-semibold"
+          className="text-white text-[clamp(1.5rem,3.5vw,3rem)] font-semibold"
         >
           {introData.caption}
         </motion.h1>
@@ -56,7 +57,7 @@ function Intro() {
           initial={{ y: 80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.6 }}
-          className="text-white w-2/3 text-justify leading-6"
+          className="text-white w-full text-justify leading-6 sm:text-center"
         >
           {introData.description}
         </motion.p>
@@ -70,7 +71,7 @@ function Intro() {
           <Button text="Explore" />
         </motion.div>
       </div>
-      <div className="w-1/3 flex items-center justify-center">
+      <div className="flex-1 basis-[260px] flex items-center justify-center sm:basis-full">
         {introData?.imgURL && (
           <motion.div
             initial={{ scale: 0, opacity: 0, y: 100 }}
@@ -91,10 +92,14 @@ function Intro() {
             }}
             whileHover={{ rotate: 2, scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
-            className="relative w-[500px] h-[400px] sm:w-[200px] sm:h-[110px] glowing-circle rounded-full bg-[#1A1A1A] overflow-hidden sm:items-center sm:justify-center"
+            className="relative w-full max-w-[420px] aspect-square sm:max-w-[220px] glowing-circle rounded-full bg-[#1A1A1A] overflow-hidden"
           >
             <img
-              src={introData?.imgURL}
+              src={optimizeCloudinaryUrl(introData?.imgURL, {
+                width: 600,
+                height: 600,
+                gravity: "face",
+              })}
               alt="profile.png"
               className="w-full h-full object-cover rounded-full transition-transform duration-500"
             />
