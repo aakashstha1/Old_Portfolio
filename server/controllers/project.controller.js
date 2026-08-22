@@ -8,7 +8,7 @@ import { generateSnapshot } from "../utils/snapshot.js";
 
 export const getAllProjects = async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find().sort({ createdAt: -1 });
     if (!projects) {
       return res.status(404).json({
         success: false,

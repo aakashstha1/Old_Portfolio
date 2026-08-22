@@ -16,7 +16,7 @@ router.route("/get").get(getAllProjects);
 router.route("/:projectId").get(getSingleProject);
 router
   .route("/update/:projectId")
-  .put(authentication, upload.single("imgURL"), updateProject);
+  .patch(authentication, upload.single("imgURL"), updateProject);
 router.route("/:projectId").delete(authentication, deleteProject);
 
 export default router;
