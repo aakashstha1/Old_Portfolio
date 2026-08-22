@@ -6,7 +6,17 @@ import { fetchSnapshot } from "../lib/snapshot";
 import { optimizeCloudinaryUrl } from "../lib/cloudinaryImage";
 function Intro() {
   const [introData, setIntroData] = useState({});
+  const [imageLoaded, setImageLoaded] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL;
+
+  const optimizedImgURL = introData?.imgURL
+    ? optimizeCloudinaryUrl(introData.imgURL, {
+        width: 600,
+        height: 600,
+        gravity: "face",
+      })
+    : null;
+
   useEffect(() => {
     const fetchData = async () => {
       // 1. Show cached snapshot instantly (works even while backend is cold-starting)
@@ -24,6 +34,18 @@ function Intro() {
 
     fetchData();
   }, [API_URL]);
+
+  // Preload the photo in the background. The circle (bg + image) only
+  // animates in once this resolves, so they appear together instead of
+  // the black bg showing first and the photo popping in after.
+  useEffect(() => {
+    if (!optimizedImgURL) return;
+    setImageLoaded(false);
+    const img = new Image();
+    img.src = optimizedImgURL;
+    img.onload = () => setImageLoaded(true);
+    img.onerror = () => setImageLoaded(true); // don't block forever on a failed load
+  }, [optimizedImgURL]);
 
   return (
     <div className="min-h-[90vh] bg-primary flex flex-wrap justify-center items-center gap-6 py-16 sm:h-full sm:py-10">
@@ -72,7 +94,7 @@ function Intro() {
         </motion.div>
       </div>
       <div className="flex-1 basis-[260px] flex items-center justify-center sm:basis-full">
-        {introData?.imgURL && (
+        {introData?.imgURL && imageLoaded && (
           <motion.div
             initial={{ scale: 0, opacity: 0, y: 100 }}
             animate={{
@@ -95,11 +117,7 @@ function Intro() {
             className="relative w-full max-w-[420px] aspect-square sm:max-w-[220px] glowing-circle rounded-full bg-[#1A1A1A] overflow-hidden"
           >
             <img
-              src={optimizeCloudinaryUrl(introData?.imgURL, {
-                width: 600,
-                height: 600,
-                gravity: "face",
-              })}
+              src={optimizedImgURL}
               alt="profile.png"
               className="w-full h-full object-cover rounded-full transition-transform duration-500"
             />
