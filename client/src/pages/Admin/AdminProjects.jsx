@@ -163,19 +163,17 @@ function AdminProjects() {
     fetchProjects();
   }, []);
 
-  useEffect(() => {
-    if (type === "edit" && selectedItemForEdit) {
-      setFormData({
-        title: selectedItemForEdit.title,
-        imgURL: selectedItemForEdit.imgURL,
-        githubURL: selectedItemForEdit.githubURL,
-        figmaURL: selectedItemForEdit.figmaURL,
-        websiteURL: selectedItemForEdit.websiteURL,
-      });
-    } else {
-      resetForm();
-    }
-  }, [selectedItemForEdit, type]);
+ useEffect(() => {
+   if (type === "edit" && selectedItemForEdit) {
+     setFormData({
+       title: selectedItemForEdit.title || "",
+       imgURL: selectedItemForEdit.imgURL || null,
+       githubURL: selectedItemForEdit.githubURL || "",
+       figmaURL: selectedItemForEdit.figmaURL || "",
+       websiteURL: selectedItemForEdit.websiteURL || "",
+     });
+   }
+ }, [selectedItemForEdit, type]);
 
   return (
     <div>
