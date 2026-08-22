@@ -8,7 +8,7 @@ import { generateSnapshot } from "../utils/snapshot.js";
 
 export const getAllProjects = async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find().sort({ createdAt: -1 });
     if (!projects) {
       return res.status(404).json({
         success: false,
@@ -130,7 +130,10 @@ export const updateProject = async (req, res) => {
     const { projectId } = req.params;
     const { title, githubURL, figmaURL, websiteURL } = req.body;
 
-    const project = await Project.findOne({ _id: projectId, user: userId });
+    const project = await Project.findOne({
+      _id: projectId,
+      user: userId,
+    });
 
     if (!project) {
       return res.status(404).json({
@@ -139,6 +142,7 @@ export const updateProject = async (req, res) => {
       });
     }
 
+    // Update image only if a new image was uploaded
     if (req.file) {
       if (!req.file.mimetype.startsWith("image/")) {
         return res.status(400).json({
@@ -146,16 +150,43 @@ export const updateProject = async (req, res) => {
           message: "Only image files are allowed",
         });
       }
+
       project.imgURL = req.file.path || req.file.secure_url;
       project.cloudinaryId = req.file.filename || req.file.public_id;
     }
 
-    project.title = title || project.title;
-    project.githubURL = githubURL || project.githubURL;
-    project.figmaURL = figmaURL || project.figmaURL;
-    project.websiteURL = websiteURL || project.websiteURL;
+    // Update title only if provided
+    if (title !== undefined && title.trim() !== "") {
+      project.title = title.trim();
+    }
+
+    // Update or remove optional URLs
+    if (githubURL !== undefined) {
+      if (githubURL.trim() === "") {
+        project.githubURL = undefined;
+      } else {
+        project.githubURL = githubURL.trim();
+      }
+    }
+
+    if (figmaURL !== undefined) {
+      if (figmaURL.trim() === "") {
+        project.figmaURL = undefined;
+      } else {
+        project.figmaURL = figmaURL.trim();
+      }
+    }
+
+    if (websiteURL !== undefined) {
+      if (websiteURL.trim() === "") {
+        project.websiteURL = undefined;
+      } else {
+        project.websiteURL = websiteURL.trim();
+      }
+    }
 
     const updatedProject = await project.save();
+
     generateSnapshot();
 
     res.status(200).json({
@@ -165,6 +196,7 @@ export const updateProject = async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating project:", error.message);
+
     res.status(500).json({
       success: false,
       message: "Failed to update project",

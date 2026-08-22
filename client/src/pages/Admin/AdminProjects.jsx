@@ -74,7 +74,7 @@ function AdminProjects() {
       payload.append("websiteURL", formData.websiteURL);
       if (formData.imgURL) payload.append("imgURL", formData.imgURL);
 
-      const res = await axios.put(
+      const res = await axios.patch(
         `${API_URL}/project/update/${selectedItemForEdit._id}`,
         payload,
         {
@@ -82,7 +82,7 @@ function AdminProjects() {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
 
       if (res.data.success) {
@@ -163,19 +163,17 @@ function AdminProjects() {
     fetchProjects();
   }, []);
 
-  useEffect(() => {
-    if (type === "edit" && selectedItemForEdit) {
-      setFormData({
-        title: selectedItemForEdit.title,
-        imgURL: selectedItemForEdit.imgURL,
-        githubURL: selectedItemForEdit.githubURL,
-        figmaURL: selectedItemForEdit.figmaURL,
-        websiteURL: selectedItemForEdit.websiteURL,
-      });
-    } else {
-      resetForm();
-    }
-  }, [selectedItemForEdit, type]);
+ useEffect(() => {
+   if (type === "edit" && selectedItemForEdit) {
+     setFormData({
+       title: selectedItemForEdit.title || "",
+       imgURL: selectedItemForEdit.imgURL || null,
+       githubURL: selectedItemForEdit.githubURL || "",
+       figmaURL: selectedItemForEdit.figmaURL || "",
+       websiteURL: selectedItemForEdit.websiteURL || "",
+     });
+   }
+ }, [selectedItemForEdit, type]);
 
   return (
     <div>
